@@ -4,10 +4,8 @@
 # Langage utiliser
 - Seulement C💯 + Algorithme📝
 
-# but de cette projet c
+# but de cette projet
 - Amélioration de competence en langage C
-
-# langage
 
 # Compatibilité
 - MacOs💻
