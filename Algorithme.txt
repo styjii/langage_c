@@ -1,0 +1,48 @@
+Jeux Plus ou Moins
+Debut
+    - Déclaration nombreMystere, modeDeJeux, niveau, MAX :
+        - nombreMystere <- nombre aleatoire
+        - modeDeJeux <- 1 ou modeDeJeux <- 2
+        - niveau :
+            - si niveau est 1 : MAX <- 100
+            - sinon si niveau est 2 : MAX <- 1000
+            - sinon si niveau est 3 : MAX <- 10000
+    - si modeDeJeux <- 1 :
+        - Declaration nombreUtilisateur, compteur :
+            - compteur <- 1
+            - Tant que nombreUtilisateur égale à nombreMystere :
+                - nombreUtilisateur <- démande à l'utilisateur de entrer
+                    - si nombreUtilisateur inferieur à nombreMystere : affiche "c'est plus"
+                    - sinon si nombreUtilisateur superieur à nombreMystere : affiche "c'est monis"
+                    - sinon affiche "Bravo, vous avez trouve le nombre compteur mystere"
+                - compteur est increment jusqu'à l'utilisateur trouve la bonne reponse
+        - demande à l'utilisateur de continue ou non :
+            si l'utilisateur veut continue : tape 1
+            sinon : tape 0
+    - sinon si modeDeJeux <- 2 :
+        - Declaration compteur1, compteur2,nombreMystere1, nombreMystere2, nombreUtilisateur1, nombreUtilisateur2 :
+            - Pour le joueur 1 :
+                - nombreMystere1 <- nombre aleatoire
+                - compteur1 <- 1
+                - Tant que nombreUtilisateur1 égale à nombreMystere1 :
+                    - nombreUtilisateur1 <- démande à l'utilisateur de entrer
+                        - si nombreUtilisateur1 inferieur à nombreMystere1 : affiche "c'est plus"
+                        - sinon si nombreUtilisateur1 superieur à nombreMystere1 : affiche "c'est monis"
+                        - sinon affiche "Bravo, vous avez trouve le nombre compteur1 mystere"
+                    - compteur1 est increment jusqu'à l'utilisateur trouve la bonne reponse
+            - Pour le joueur 2 :
+                - nombreMystere192 <- nombre aleatoire
+                - compteur2 <- 1
+                - Tant que nombreUtilisateur2 égale à nombreMystere2 :
+                    - nombreUtilisateur2 <- démande à l'utilisateur de entrer
+                        - si nombreUtilisateur2 inferieur à nombreMystere2 : affiche "c'est plus"
+                        - sinon si nombreUtilisateur2 superieur à nombreMystere2 : affiche "c'est monis"
+                        - sinon affiche "Bravo, vous avez trouve le nombre compteur2 mystere"
+                    - compteur2 est increment jusqu'à l'utilisateur trouve la bonne reponse
+            - comparaison :
+                - si compteur1 > compteur2 alors joueur 2 vous avez gagner !
+                - sinon joueur 1 vous avez gagner !
+            - demande à l'utilisateur de continue ou non :
+                si l'utilisateur veut continue : tape 1
+                sinon : tape 0
+Fin
