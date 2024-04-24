@@ -2,137 +2,99 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, char *argv[]) {
-    int nombreMystere, nombreUtilisateur, compteur, continuerPartie, modeDeJeux, niveau, MAX;
-    srand(time(NULL));
-    continuerPartie = 0;
-    printf("JEUX DE CHIFFRE PLUS OU MOINS\n\n");
-    // choix de joueur
-    printf("== Manu ==\n\n");
-    printf("1 - Mode un joueur\n");
-    printf("2 - Mode deux joueur\n");
-    do {
-        printf("\nQue voulez-vous ? ");
-        scanf("%d", &modeDeJeux);
-    } while (modeDeJeux != 1 && modeDeJeux != 2);
-    
-    printf("== Niveau ==\n\n");
+int mode() {
+    int modeDeJoueur = 0;
+    printf("=== Mode de joeur ===\n\n");
+    printf("1 - mode 1 joueur\n");
+    printf("2 - mode 2 joueur\n");
+    printf("\n");
+    while (modeDeJoueur != 1 && modeDeJoueur != 2) {
+        printf("Que voulez-vous ? ");
+        scanf("%d", &modeDeJoueur);
+    }
+    return modeDeJoueur;
+}
+
+int niveau() {
+    int Max, niveau;
+    printf("\n=== Niveau ===\n\n");
     printf("1 - 1 à 100\n");
     printf("2 - 1 à 1000\n");
     printf("3 - 1 à 10000\n");
+    printf("\n");
+    // 1 <= niveau <=3 => 1 > niveau > 3
     do {
-        printf("\nQue voulez-vous ? ");
+        printf("Que voulez-vous ? ");
         scanf("%d", &niveau);
-    } while (niveau != 1 && niveau != 2 && niveau != 3);
-    
+    } while (niveau < 1 || niveau > 3);
     switch (niveau) {
         case 1 :
-            MAX = 100;
-            printf("Niveau facile");
+            Max = 100;
             break;
         case 2 :
-            MAX = 1000;
-           printf("Niveau normale"); 
+            Max = 1000;
             break;
         case 3 :
-            MAX = 10000;
-            printf("Niveau difficile");
+            Max = 10000;
             break;
-        default :
-            printf("Aucun niveau");
     }
+    return Max;
+}
+
+int jeux(int nombreEntrer, int Max) {
+    int nombreMystere = 0, Min = 1, compteur = 0;
     
-    if (modeDeJeux == 1) {
-        do {
-            compteur = 1;
-            nombreMystere = (rand() % MAX) + 1;
-            printf("\n\n");
-            do {
-                printf("Quelle est le nombre ? ");
-                scanf("%d", &nombreUtilisateur);
-                if (nombreUtilisateur < nombreMystere) {
-                    printf("C'est plus\n\n");
-                } else if (nombreUtilisateur > nombreMystere) {
-                    printf("C'est moins\n\n");
-                } else {
-                    printf("Bravo, vous avez trouve le nombre mystere en %d coups\n", compteur);
-                }
-                compteur++;
-            } while(nombreMystere != nombreUtilisateur);
-            printf("\n\nVoulez-vous continuer ?\n");
-            printf("1 pour oui et 0 pour non : ");
-            scanf("%d", &continuerPartie);
-            switch (continuerPartie) {
-                case 1 :
-                    continuerPartie = 1;
-                    break;
-                case 0 :
-                    continuerPartie = 0;
-                    break;
-                default :
-                    while (continuerPartie != 0 && continuerPartie != 1) {
-                        printf("\nChoisir entre 0 et 1 : ");
-                        scanf("%d", &continuerPartie);
-                    }
+    srand(time(NULL));
+    nombreMystere = (rand() % (Max - Min + 1)) + Min;
+    
+    printf("Entrer le nombre entre %d et %d\n\n", Min, Max);
+    do {
+        compteur++;
+        printf("Quelle est ce nombre ? ");
+        scanf("%d", &nombreEntrer);
+        
+        if (nombreEntrer > nombreMystere) printf("C'est moins !\n");
+        else if (nombreEntrer < nombreMystere) printf("C'est plus !\n");
+        else printf("\nBravo, vous avez trouvé le nombre mystère en %d coups !\n", compteur);
+    } while (nombreEntrer != nombreMystere);
+    return compteur;
+}
+
+int main(int argc, char *argv[]) {
+    int Max = niveau(), continuerPartie = 1;
+    
+    // demand de deviner le nombre
+    int nombreEntrer = 0;
+    
+    // lanchement du jeux
+    while (continuerPartie != 0) {
+        if (mode() == 1) {
+            jeux(nombreEntrer, Max);
+        } else {
+            int coups1, coups2;
+            // deux joueur
+            printf("\n=== joueur 1 ===\n\n");
+            coups1 = jeux(nombreEntrer, Max);
+            printf("\n=== joueur 2 ===\n\n");
+            coups2 = jeux(nombreEntrer, Max);
+            
+            if (coups2 > coups1) {
+                printf("\njoueur 1 vous avez gagné.\n");
+            } else if (coups1 > coups2) {
+                printf("\njoueur 2 vous avez gagné.\n");
+            } else {
+                printf("\négaux, donc sans vaincaire !\n");
             }
-        } while (continuerPartie != 0);
-    } else if (modeDeJeux == 2) {
-        int compteur1, compteur2,nombreMystere1, nombreMystere2, nombreUtilisateur1, nombreUtilisateur2;
+        }
+        
+        printf("\nVous-voulez continuer ?\n\n");
+        printf("0 - non\n");
+        printf("1 - oui\n");
+        printf("\n");
+        
         do {
-            compteur1 = 1;
-            nombreMystere1 = (rand() % MAX) + 1;
-            printf("\n\n=== Joeur 1 ===\n\n");
-            do {
-                printf("Quelle est le nombre ? ");
-                scanf("%d", &nombreUtilisateur1);
-                if (nombreUtilisateur1 < nombreMystere1) {
-                    printf("C'est plus\n\n");
-                } else if (nombreUtilisateur1 > nombreMystere1) {
-                    printf("C'est moins\n\n");
-                } else {
-                    printf("Joeur 1, vous avez trouve le nombre mystere en %d coups\n", compteur1);
-                    compteur2 = 1;
-                    nombreMystere2 = (rand() % MAX) + 1;
-                    printf("\n\n=== Joeur 2 ===\n\n");
-                    do {
-                        printf("Quelle est le nombre ? ");
-                        scanf("%d", &nombreUtilisateur2);
-                        if (nombreUtilisateur2 < nombreMystere2) {
-                            printf("C'est plus\n\n");
-                        } else if (nombreUtilisateur2 > nombreMystere2) {
-                            printf("C'est moins\n\n");
-                        } else {
-                            printf("Joeur 2, vous avez trouve le nombre mystere en %d coups\n", compteur2);
-                            if (compteur1 > compteur2) {
-                                printf("joueur 2 vous avez gagner !\n");
-                            } else {
-                                printf("joueur 1 vous avez gagner !\n");
-                            }
-                        }
-                        compteur2++;
-                    } while(nombreMystere2 != nombreUtilisateur2);
-                }
-                compteur1++;
-            } while(nombreMystere1 != nombreUtilisateur1);
-            printf("\n\nVoulez-vous continuer ?\n");
-            printf("1 pour oui et 0 pour non : ");
+            printf("Que voulez-vous ? ");
             scanf("%d", &continuerPartie);
-            switch (continuerPartie) {
-                case 1 :
-                    continuerPartie = 1;
-                    break;
-                case 0 :
-                    continuerPartie = 0;
-                    break;
-                default :
-                    while (continuerPartie != 0 && continuerPartie != 1) {
-                        printf("\nChoisir entre 0 et 1 : ");
-                        scanf("%d", &continuerPartie);
-                    }
-            }
-        } while (continuerPartie != 0);
-    } else {
-        printf("Votre choix est aucun");
+        } while (continuerPartie != 1 && continuerPartie != 0);
     }
-    return 0;
 }
